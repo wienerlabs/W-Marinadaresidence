@@ -100,10 +100,10 @@
     this.forwardGrowthRate = gravity * rfb(35, 50);
     this.outwardGrowthRate = this.forwardGrowthRate * rfb(0.18, 0.22);
     this.maxSegmentWidth = rfb(11, 13);
-    this.maxTotalSegments = rib(10, 20);
+    this.maxTotalSegments = rib(6, 12);
     this.firstLeafSegment = rib(2, 4);
     this.leafFrequency = rib(2, 3);
-    this.maxLeaflength = this.maxSegmentWidth * rfb(4, 7);
+    this.maxLeaflength = this.maxSegmentWidth * rfb(3, 5);
     this.leafGrowthRate = this.forwardGrowthRate * rfb(1.4, 1.6);
     this.ptB1 = addPt(this.xLocation - 0.1, 100);
     this.ptB2 = addPt(this.xLocation + 0.1, 100);
@@ -264,40 +264,59 @@
   }
 
   function resetAll() {
-    points = []; pointCount = 0;
-    spans = []; spanCount = 0;
-    skins = []; skinCount = 0;
-    plants = []; plantCount = 0;
-    sunRays = []; sunRayCount = 0;
+    points.length = 0; pointCount = 0;
+    spans.length = 0; spanCount = 0;
+    skins.length = 0; skinCount = 0;
+    plants.length = 0; plantCount = 0;
+    sunRays.length = 0; sunRayCount = 0;
     worldTime = 0;
+    loopPhase = "growing";
+    fadeAlpha = 1;
     for (var i = 0; i < 25; i++) createPlant();
     createSunRays();
   }
 
-  function allFullyGrown() {
-    for (var i = 0; i < plants.length; i++) {
-      if (plants[i].segmentCount < plants[i].maxTotalSegments) return false;
-    }
-    return true;
-  }
-
-  var matureFrames = 0;
-  var MATURE_HOLD = 300; // hold fully grown state for ~5 seconds at 60fps
+  var LOOP_MAX_FRAMES = 1800; // force restart after ~30 sec regardless
+  var HOLD_FRAMES = 240;      // hold mature ~4 sec
+  var FADE_FRAMES = 60;       // fade out ~1 sec
+  var loopPhase = "growing";  // "growing" | "holding" | "fading"
+  var phaseCounter = 0;
+  var fadeAlpha = 1;
 
   resetAll();
 
   function display() {
     updatePoints(); refinePositions();
     ctx.clearRect(0, 0, SZ, SZ);
+
+    ctx.globalAlpha = fadeAlpha;
     growPlants(); renderPlants();
     markRayLeafIntersections(); photosynthesize();
+    ctx.globalAlpha = 1;
     worldTime++;
 
-    // Loop: once all plants are mature, hold for a while then restart
-    if (allFullyGrown()) {
-      matureFrames++;
-      if (matureFrames > MATURE_HOLD) {
-        matureFrames = 0;
+    // Loop state machine
+    if (loopPhase === "growing") {
+      // Check if most plants are fully grown or time limit hit
+      var grownCount = 0;
+      for (var i = 0; i < plants.length; i++) {
+        if (plants[i].segmentCount >= plants[i].maxTotalSegments - 1) grownCount++;
+      }
+      if (grownCount >= plants.length * 0.8 || worldTime > LOOP_MAX_FRAMES) {
+        loopPhase = "holding";
+        phaseCounter = 0;
+      }
+    } else if (loopPhase === "holding") {
+      phaseCounter++;
+      if (phaseCounter >= HOLD_FRAMES) {
+        loopPhase = "fading";
+        phaseCounter = 0;
+      }
+    } else if (loopPhase === "fading") {
+      phaseCounter++;
+      fadeAlpha = 1 - (phaseCounter / FADE_FRAMES);
+      if (fadeAlpha <= 0) {
+        fadeAlpha = 1;
         resetAll();
       }
     }
