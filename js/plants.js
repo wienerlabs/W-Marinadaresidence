@@ -276,8 +276,8 @@
     createSunRays();
   }
 
-  var LOOP_MAX_FRAMES = 900;  // force restart after ~15 sec
-  var HOLD_FRAMES = 60;       // hold mature ~1 sec
+  var LOOP_MAX_FRAMES = 2400; // force restart after ~40 sec
+  var HOLD_FRAMES = 180;      // hold mature ~3 sec
   var FADE_FRAMES = 40;       // fade out ~0.7 sec
   var loopPhase = "growing";  // "growing" | "holding" | "fading"
   var phaseCounter = 0;
