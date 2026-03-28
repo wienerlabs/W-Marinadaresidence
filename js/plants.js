@@ -5,10 +5,14 @@
   if (!container || !canvas) return;
   var ctx = canvas.getContext("2d");
 
-  // Set canvas to a square internal resolution — the physics engine needs equal aspect ratio
-  var SZ = 1000;
-  canvas.width = SZ;
-  canvas.height = SZ;
+  // Determine canvas size from container's actual aspect ratio
+  var rect = container.getBoundingClientRect();
+  var ratio = rect.width / rect.height; // e.g. ~5.6 for 1400x250
+  // Use a virtual height of 1000, width scales proportionally
+  var CH = 1000;
+  var CW = Math.round(CH * ratio);
+  canvas.width = CW;
+  canvas.height = CH;
 
   // Verlet engine
   var points = [], pointCount = 0;
@@ -36,10 +40,10 @@
     this.points = pts; this.color = color; this.id = skinCount++;
   }
 
-  function xvp(p) { return p * SZ / 100; }
-  function yvp(p) { return p * SZ / 100; }
-  function pxv(v) { return v * 100 / SZ; }
-  function pyv(v) { return v * 100 / SZ; }
+  function xvp(p) { return p * CW / 100; }
+  function yvp(p) { return p * CH / 100; }
+  function pxv(v) { return v * 100 / CW; }
+  function pyv(v) { return v * 100 / CH; }
   function getPt(id) { for (var i = 0; i < points.length; i++) if (points[i].id === id) return points[i]; }
   function dist(a, b) { var dx = b.cx - a.cx, dy = b.cy - a.cy; return Math.sqrt(dx * dx + dy * dy); }
   function midp(s) { return { x: (s.p1.cx + s.p2.cx) / 2, y: (s.p1.cy + s.p2.cy) / 2 }; }
@@ -55,7 +59,7 @@
       var p = points[i];
       if (!p.fixed) {
         var xv = (p.cx - p.px) * friction, yv = (p.cy - p.py) * friction;
-        if (p.py >= SZ - 1) xv *= skidLoss;
+        if (p.py >= CH - 1) xv *= skidLoss;
         p.px = p.cx; p.py = p.cy;
         p.cx += xv; p.cy += yv; p.cy += gravity * p.mass;
         if (worldTime % rib(100, 200) === 0) p.cx += rfb(-breeze, breeze);
@@ -66,9 +70,9 @@
     for (var i = 0; i < points.length; i++) {
       var p = points[i];
       if (p.materiality === "material") {
-        if (p.cx > SZ) { p.cx = SZ; p.px = p.cx + (p.cx - p.px) * bounceLoss; }
+        if (p.cx > CW) { p.cx = CW; p.px = p.cx + (p.cx - p.px) * bounceLoss; }
         if (p.cx < 0) { p.cx = 0; p.px = p.cx + (p.cx - p.px) * bounceLoss; }
-        if (p.cy > SZ) { p.cy = SZ; p.py = p.cy + (p.cy - p.py) * bounceLoss; }
+        if (p.cy > CH) { p.cy = CH; p.py = p.cy + (p.cy - p.py) * bounceLoss; }
         if (p.cy < 0) { p.cy = 0; p.py = p.cy + (p.cy - p.py) * bounceLoss; }
       }
     }
@@ -144,7 +148,7 @@
     pl.segmentCount++; pl.segments.unshift(new Segment(pl, par, b1, b2));
     if (par) { par.childSegment = pl.segments[pl.segments.length - 1]; par.hasChildSegment = true; }
   }
-  function createSunRays() { for (var i = 0; i < 101; i++) { sunRays.push({ id: sunRayCount, x: xvp(i), intensity: 1, leafContacts: [] }); sunRayCount++; } }
+  function createSunRays() { for (var i = 0; i < 101; i++) { sunRays.push({ id: i, x: xvp(i), intensity: 1, leafContacts: [] }); } }
 
   function markRayLeafIntersections() {
     for (var i = 0; i < plants.length; i++) {
@@ -286,14 +290,15 @@
     }
   }
 
-  // Init plants
-  for (var i = 0; i < 20; i++) createPlant();
+  // Create more plants to fill the wide canvas
+  var numPlants = Math.round(20 * ratio);
+  for (var i = 0; i < numPlants; i++) createPlant();
   createSunRays();
 
   function display() {
     updatePoints();
     refinePositions();
-    ctx.clearRect(0, 0, SZ, SZ);
+    ctx.clearRect(0, 0, CW, CH);
     growPlants();
     renderPlants();
     markRayLeafIntersections();
