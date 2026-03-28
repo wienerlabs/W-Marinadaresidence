@@ -230,7 +230,7 @@
                         </div>
                         <div>
                             <h3 class="text-lg font-medium text-stone-900 mb-3 flex items-center gap-2 font-sans">
-                                <iconify-icon icon="solar:concierge-bell-bold-duotone" class="text-stone-400"></iconify-icon>
+                                <iconify-icon icon="mdi:room-service-outline" class="text-stone-400"></iconify-icon>
                                 <span data-i18n="about.concierge.title">Concierge Hizmetleri</span>
                             </h3>
                             <p class="text-lg text-stone-500 leading-relaxed max-w-md font-sans" data-i18n="about.concierge.desc">
@@ -384,10 +384,14 @@
                 <p class="text-stone-400 max-w-lg text-lg font-sans" data-i18n="suites.desc">1+1'den 5+1'e kadar flat, dubleks, tripleks ve penthouse seçenekleriyle toplam 72 daire. 128 m²'den 792 m²'ye geniş proje alanında modern yaşam.</p>
             </div>
 
-            <!-- Deniz Manzaralı Daireler Card -->
-            <div class="relative w-full h-[80vh] rounded-[2rem] overflow-hidden group cursor-pointer [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll">
-                <!-- Background -->
-                <img src="img/interior-bedroom-sea.webp" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+            <!-- Deniz Manzaralı Daireler Card (Slider) -->
+            <div id="suite-slider" class="relative w-full h-[80vh] rounded-[2rem] overflow-hidden cursor-pointer [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll">
+                <!-- Slide Images -->
+                <img class="suite-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-100" src="img/interior-bedroom-sea.webp">
+                <img class="suite-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0" src="img/interior-kitchen.webp">
+                <img class="suite-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0" src="img/interior-living-panoramic.webp">
+                <img class="suite-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0" src="img/interior-living-dining.webp">
+                <img class="suite-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-0" src="img/interior-bedroom-terrace.webp">
 
                 <!-- Overlay -->
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -413,20 +417,29 @@
                     </div>
 
                     <div class="flex items-center gap-6">
-                        <button class="w-16 h-16 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-stone-900 transition-all duration-300">
-                            <iconify-icon icon="solar:arrow-left-linear" width="24"></iconify-icon>
+                        <button id="slide-prev" class="w-16 h-16 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-stone-900 transition-all duration-300">
+                            <iconify-icon icon="mdi:arrow-left" width="24"></iconify-icon>
                         </button>
-                        <button class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-stone-900 hover:scale-110 transition-transform duration-300">
-                            <iconify-icon icon="solar:arrow-right-linear" width="24"></iconify-icon>
+                        <button id="slide-next" class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-stone-900 hover:scale-110 transition-transform duration-300">
+                            <iconify-icon icon="mdi:arrow-right" width="24"></iconify-icon>
                         </button>
                     </div>
+                </div>
+
+                <!-- Slide Indicators -->
+                <div class="absolute top-10 left-10 flex items-center gap-2">
+                    <span class="suite-dot w-8 h-1 rounded-full bg-white transition-all duration-300"></span>
+                    <span class="suite-dot w-4 h-1 rounded-full bg-white/40 transition-all duration-300"></span>
+                    <span class="suite-dot w-4 h-1 rounded-full bg-white/40 transition-all duration-300"></span>
+                    <span class="suite-dot w-4 h-1 rounded-full bg-white/40 transition-all duration-300"></span>
+                    <span class="suite-dot w-4 h-1 rounded-full bg-white/40 transition-all duration-300"></span>
                 </div>
 
                 <!-- Floating Badge Top Right -->
                 <div class="absolute top-10 right-10">
                     <div class="bg-stone-900/40 backdrop-blur-md border border-white/10 p-1 rounded-full">
                          <div class="bg-white rounded-full p-3">
-                             <iconify-icon icon="solar:heart-bold-duotone" class="text-stone-900" width="20"></iconify-icon>
+                             <iconify-icon icon="mdi:heart" class="text-stone-900" width="20"></iconify-icon>
                          </div>
                     </div>
                 </div>

@@ -45,6 +45,27 @@
       });
     }
 
+    // Suite slider
+    var slides = document.querySelectorAll(".suite-slide");
+    var dots = document.querySelectorAll(".suite-dot");
+    var prevBtn = document.getElementById("slide-prev");
+    var nextBtn = document.getElementById("slide-next");
+    if (slides.length > 0 && prevBtn && nextBtn) {
+      var current = 0;
+      function showSlide(idx) {
+        slides.forEach(function(s, i) { s.style.opacity = i === idx ? "1" : "0"; });
+        dots.forEach(function(d, i) {
+          d.className = i === idx
+            ? "suite-dot w-8 h-1 rounded-full bg-white transition-all duration-300"
+            : "suite-dot w-4 h-1 rounded-full bg-white/40 transition-all duration-300";
+        });
+        current = idx;
+      }
+      nextBtn.addEventListener("click", function(e) { e.stopPropagation(); showSlide((current + 1) % slides.length); });
+      prevBtn.addEventListener("click", function(e) { e.stopPropagation(); showSlide((current - 1 + slides.length) % slides.length); });
+      setInterval(function() { showSlide((current + 1) % slides.length); }, 5000);
+    }
+
     // Newsletter form handler
     var nlForm = document.getElementById("newsletter-form");
     if (nlForm) {
