@@ -263,8 +263,28 @@
     }
   }
 
-  for (var i = 0; i < 25; i++) createPlant();
-  createSunRays();
+  function resetAll() {
+    points = []; pointCount = 0;
+    spans = []; spanCount = 0;
+    skins = []; skinCount = 0;
+    plants = []; plantCount = 0;
+    sunRays = []; sunRayCount = 0;
+    worldTime = 0;
+    for (var i = 0; i < 25; i++) createPlant();
+    createSunRays();
+  }
+
+  function allFullyGrown() {
+    for (var i = 0; i < plants.length; i++) {
+      if (plants[i].segmentCount < plants[i].maxTotalSegments) return false;
+    }
+    return true;
+  }
+
+  var matureFrames = 0;
+  var MATURE_HOLD = 300; // hold fully grown state for ~5 seconds at 60fps
+
+  resetAll();
 
   function display() {
     updatePoints(); refinePositions();
@@ -272,6 +292,16 @@
     growPlants(); renderPlants();
     markRayLeafIntersections(); photosynthesize();
     worldTime++;
+
+    // Loop: once all plants are mature, hold for a while then restart
+    if (allFullyGrown()) {
+      matureFrames++;
+      if (matureFrames > MATURE_HOLD) {
+        matureFrames = 0;
+        resetAll();
+      }
+    }
+
     requestAnimationFrame(display);
   }
   display();
