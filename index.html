@@ -115,59 +115,68 @@
         </div>
     </header>
 
-    <!-- Ulaşım Avantajları Section -->
-    <section id="konum" class="py-20 border-b border-stone-200 bg-white">
-        <div class="max-w-[1600px] mx-auto px-6 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
-            <p class="text-center text-sm uppercase tracking-widest text-stone-400 mb-12 font-medium font-sans" data-i18n="loc.title">Stratejik Konumun Avantajı</p>
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-                <div class="flex flex-col items-center gap-2">
-                    <iconify-icon icon="solar:airplane-bold-duotone" width="32" class="text-stone-800"></iconify-icon>
-                    <span class="text-sm font-medium text-stone-800 font-sans" data-i18n="loc.ataturk">Atatürk Hvl.</span>
-                    <span class="text-xs text-stone-400 font-sans" data-i18n="loc.ataturk.time">10 dk</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <iconify-icon icon="solar:route-bold-duotone" width="32" class="text-stone-800"></iconify-icon>
-                    <span class="text-sm font-medium text-stone-800 font-sans" data-i18n="loc.avrasya">Avrasya Tüneli</span>
-                    <span class="text-xs text-stone-400 font-sans" data-i18n="loc.avrasya.time">10 dk</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <iconify-icon icon="solar:city-bold-duotone" width="32" class="text-stone-800"></iconify-icon>
-                    <span class="text-sm font-medium text-stone-800 font-sans" data-i18n="loc.kadikoy">Kadıköy</span>
-                    <span class="text-xs text-stone-400 font-sans" data-i18n="loc.kadikoy.time">20 dk</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <iconify-icon icon="solar:map-point-bold-duotone" width="32" class="text-stone-800"></iconify-icon>
-                    <span class="text-sm font-medium text-stone-800 font-sans" data-i18n="loc.taksim">Taksim</span>
-                    <span class="text-xs text-stone-400 font-sans" data-i18n="loc.taksim.time">25 dk</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <iconify-icon icon="solar:shop-bold-duotone" width="32" class="text-stone-800"></iconify-icon>
-                    <span class="text-sm font-medium text-stone-800 font-sans" data-i18n="loc.galataport">Galataport</span>
-                    <span class="text-xs text-stone-400 font-sans" data-i18n="loc.galataport.time">25 dk</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <iconify-icon icon="solar:global-bold-duotone" width="32" class="text-stone-800"></iconify-icon>
-                    <span class="text-sm font-medium text-stone-800 font-sans" data-i18n="loc.istanbul">İstanbul Hvl.</span>
-                    <span class="text-xs text-stone-400 font-sans" data-i18n="loc.istanbul.time">40 dk</span>
-                </div>
+    <!-- Ulaşım Ağı Section -->
+    <section id="konum" class="py-32 bg-stone-900 overflow-hidden">
+        <div class="max-w-[1600px] mx-auto px-6">
+            <div class="flex flex-col items-center text-center mb-16 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                <span class="text-xs font-semibold tracking-[0.2em] text-stone-400 uppercase mb-4 font-sans" data-i18n="loc.label">Ulaşım Ağı</span>
+                <h2 class="text-5xl md:text-6xl text-white tracking-tight mb-6 font-oswald font-normal" data-i18n="loc.title">Stratejik Konumun Avantajı</h2>
+                <p class="text-stone-400 max-w-lg text-lg font-sans" data-i18n="loc.subtitle">İstanbul'un kalbinde, tüm ulaşım noktalarına dakikalar mesafede.</p>
             </div>
-            <!-- Nearby Landmarks -->
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 mt-12 pt-10 border-t border-stone-200 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll">
-                <div class="flex flex-col items-center gap-2">
-                    <iconify-icon icon="solar:star-bold-duotone" width="32" class="text-stone-800"></iconify-icon>
-                    <span class="text-sm font-medium text-stone-800 font-sans" data-i18n="loc.sheraton">Sheraton Hotel</span>
-                    <span class="text-xs text-stone-400 font-sans" data-i18n="loc.sheraton.sub">5 Yıldız</span>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+                <!-- Map Image -->
+                <div class="rounded-[2rem] overflow-hidden shadow-2xl [animation:animationIn_0.8s_ease-out_0.2s_both] animate-on-scroll">
+                    <img src="img/location-map.webp" alt="Marinada Residence Ulaşım Ağı" class="w-full h-full object-cover">
                 </div>
-                <div class="flex flex-col items-center gap-2">
-                    <iconify-icon icon="solar:sailing-bold-duotone" width="32" class="text-stone-800"></iconify-icon>
-                    <span class="text-sm font-medium text-stone-800 font-sans" data-i18n="loc.marina">Ataköy Marina</span>
-                    <span class="text-xs text-stone-400 font-sans" data-i18n="loc.marina.sub">1000 Tekne</span>
+
+                <!-- Distance List -->
+                <div class="[animation:animationIn_0.8s_ease-out_0.4s_both] animate-on-scroll">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5">
+                        <div class="flex items-center justify-between py-3 border-b border-white/10">
+                            <span class="text-white text-sm font-medium font-sans" data-i18n="loc.r1">İstanbul Havalimanı</span>
+                            <span class="text-stone-400 text-sm font-sans shrink-0 ml-4" data-i18n="loc.r1t">40 dk</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-white/10">
+                            <span class="text-white text-sm font-medium font-sans" data-i18n="loc.r2">Sabiha Gökçen Hvl.</span>
+                            <span class="text-stone-400 text-sm font-sans shrink-0 ml-4" data-i18n="loc.r2t">45 dk</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-white/10">
+                            <span class="text-white text-sm font-medium font-sans" data-i18n="loc.r3">Atatürk Havalimanı</span>
+                            <span class="text-stone-400 text-sm font-sans shrink-0 ml-4" data-i18n="loc.r3t">10 dk</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-white/10">
+                            <span class="text-white text-sm font-medium font-sans" data-i18n="loc.r4">Avrasya Tüneli</span>
+                            <span class="text-stone-400 text-sm font-sans shrink-0 ml-4" data-i18n="loc.r4t">10 dk</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-white/10">
+                            <span class="text-white text-sm font-medium font-sans" data-i18n="loc.r5">15 Temmuz Şehitler Köprüsü</span>
+                            <span class="text-stone-400 text-sm font-sans shrink-0 ml-4" data-i18n="loc.r5t">25 dk</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-white/10">
+                            <span class="text-white text-sm font-medium font-sans" data-i18n="loc.r6">Taksim</span>
+                            <span class="text-stone-400 text-sm font-sans shrink-0 ml-4" data-i18n="loc.r6t">25 dk</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-white/10">
+                            <span class="text-white text-sm font-medium font-sans" data-i18n="loc.r7">Nişantaşı</span>
+                            <span class="text-stone-400 text-sm font-sans shrink-0 ml-4" data-i18n="loc.r7t">30 dk</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-white/10">
+                            <span class="text-white text-sm font-medium font-sans" data-i18n="loc.r8">Galataport</span>
+                            <span class="text-stone-400 text-sm font-sans shrink-0 ml-4" data-i18n="loc.r8t">25 dk</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-white/10">
+                            <span class="text-white text-sm font-medium font-sans" data-i18n="loc.r9">İstinyePark</span>
+                            <span class="text-stone-400 text-sm font-sans shrink-0 ml-4" data-i18n="loc.r9t">30 dk</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-white/10">
+                            <span class="text-white text-sm font-medium font-sans" data-i18n="loc.r10">Kadıköy</span>
+                            <span class="text-stone-400 text-sm font-sans shrink-0 ml-4" data-i18n="loc.r10t">20 dk</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex flex-col items-center gap-2">
-                    <iconify-icon icon="solar:bag-smile-bold-duotone" width="32" class="text-stone-800"></iconify-icon>
-                    <span class="text-sm font-medium text-stone-800 font-sans" data-i18n="loc.avm">Marina Park AVM</span>
-                    <span class="text-xs text-stone-400 font-sans" data-i18n="loc.avm.sub">Yürüme Mesafesi</span>
-                </div>
+
             </div>
         </div>
     </section>
