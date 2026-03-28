@@ -5,17 +5,21 @@
   if (!container || !canvas) return;
   var ctx = canvas.getContext("2d");
 
-  // Square canvas for correct physics — CSS crops to show only the bottom
-  var SZ = 1000;
-  canvas.width = SZ;
-  canvas.height = SZ;
+  // Match canvas resolution to container's actual pixel dimensions (retina-ready)
+  var dpr = window.devicePixelRatio || 1;
+  var rect = container.getBoundingClientRect();
+  var CW = Math.round(rect.width * dpr);
+  var CH = Math.round(rect.height * dpr);
+  canvas.width = CW;
+  canvas.height = CH;
 
   // Verlet engine
   var points = [], pointCount = 0;
   var spans = [], spanCount = 0;
   var skins = [], skinCount = 0;
   var worldTime = 0;
-  var gravity = 0.01;
+  var gravityBase = 0.01;
+  var gravity = gravityBase;
   var rigidity = 10;
   var friction = 0.999;
   var bounceLoss = 0.9;
@@ -34,10 +38,10 @@
   }
   function Skin(pts, color) { this.points = pts; this.color = color; this.id = skinCount++; }
 
-  function xvp(p) { return p * SZ / 100; }
-  function yvp(p) { return p * SZ / 100; }
-  function pxv(v) { return v * 100 / SZ; }
-  function pyv(v) { return v * 100 / SZ; }
+  function xvp(p) { return p * CW / 100; }
+  function yvp(p) { return p * CH / 100; }
+  function pxv(v) { return v * 100 / CW; }
+  function pyv(v) { return v * 100 / CH; }
   function getPt(id) { for (var i = 0; i < points.length; i++) if (points[i].id === id) return points[i]; }
   function dist(a, b) { var dx = b.cx - a.cx, dy = b.cy - a.cy; return Math.sqrt(dx * dx + dy * dy); }
   function midp(s) { return { x: (s.p1.cx + s.p2.cx) / 2, y: (s.p1.cy + s.p2.cy) / 2 }; }
@@ -53,7 +57,7 @@
       var p = points[i];
       if (!p.fixed) {
         var xv = (p.cx - p.px) * friction, yv = (p.cy - p.py) * friction;
-        if (p.py >= SZ - 1) xv *= skidLoss;
+        if (p.py >= CH - 1) xv *= skidLoss;
         p.px = p.cx; p.py = p.cy;
         p.cx += xv; p.cy += yv; p.cy += gravity * p.mass;
         if (worldTime % rib(100, 200) === 0) p.cx += rfb(-breeze, breeze);
@@ -64,9 +68,9 @@
     for (var i = 0; i < points.length; i++) {
       var p = points[i];
       if (p.materiality === "material") {
-        if (p.cx > SZ) { p.cx = SZ; p.px = p.cx + (p.cx - p.px) * bounceLoss; }
+        if (p.cx > CW) { p.cx = CW; p.px = p.cx + (p.cx - p.px) * bounceLoss; }
         if (p.cx < 0) { p.cx = 0; p.px = p.cx + (p.cx - p.px) * bounceLoss; }
-        if (p.cy > SZ) { p.cy = SZ; p.py = p.cy + (p.cy - p.py) * bounceLoss; }
+        if (p.cy > CH) { p.cy = CH; p.py = p.cy + (p.cy - p.py) * bounceLoss; }
         if (p.cy < 0) { p.cy = 0; p.py = p.cy + (p.cy - p.py) * bounceLoss; }
       }
     }
@@ -97,14 +101,16 @@
   function Plant(xLoc) {
     this.id = plantCount; this.segments = []; this.segmentCount = 0;
     this.xLocation = xLoc; this.energy = 5000; this.isAlive = true;
-    this.forwardGrowthRate = gravity * rfb(35, 50);
+    var scale = CH / 1000; // scale physics to actual canvas height
+    this.forwardGrowthRate = gravity * rfb(35, 50) * scale;
     this.outwardGrowthRate = this.forwardGrowthRate * rfb(0.18, 0.22);
-    this.maxSegmentWidth = rfb(6, 8);
-    this.maxTotalSegments = rib(4, 8);
+    this.maxSegmentWidth = rfb(8, 12) * scale;
+    this.maxTotalSegments = rib(5, 10);
     this.firstLeafSegment = rib(2, 4);
     this.leafFrequency = rib(2, 3);
-    this.maxLeaflength = this.maxSegmentWidth * rfb(2, 3.5);
+    this.maxLeaflength = this.maxSegmentWidth * rfb(2.5, 4);
     this.leafGrowthRate = this.forwardGrowthRate * rfb(1.4, 1.6);
+    this.energy = 5000 * scale;
     this.ptB1 = addPt(this.xLocation - 0.1, 100);
     this.ptB2 = addPt(this.xLocation + 0.1, 100);
     this.ptB1.fixed = this.ptB2.fixed = true;
@@ -272,7 +278,8 @@
     worldTime = 0;
     loopPhase = "growing";
     fadeAlpha = 1;
-    for (var i = 0; i < 25; i++) createPlant();
+    var numPlants = Math.max(15, Math.round(CW / CH * 8));
+    for (var i = 0; i < numPlants; i++) createPlant();
     createSunRays();
   }
 
@@ -287,7 +294,7 @@
 
   function display() {
     updatePoints(); refinePositions();
-    ctx.clearRect(0, 0, SZ, SZ);
+    ctx.clearRect(0, 0, CW, CH);
 
     ctx.globalAlpha = fadeAlpha;
     growPlants(); renderPlants();
