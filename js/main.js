@@ -21,5 +21,42 @@
       window.__inViewIO.observe(el);
     });
   };
-  document.addEventListener("DOMContentLoaded", () => initInViewAnimations());
+  document.addEventListener("DOMContentLoaded", function () {
+    initInViewAnimations();
+
+    // Contact form handler
+    var contactForm = document.getElementById("contact-form");
+    if (contactForm) {
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!contactForm.checkValidity()) { contactForm.reportValidity(); return; }
+        var btn = contactForm.querySelector('button[type="submit"]');
+        var msg = document.getElementById("contact-success");
+        btn.disabled = true;
+        btn.style.opacity = "0.5";
+        setTimeout(function () {
+          contactForm.reset();
+          btn.disabled = false;
+          btn.style.opacity = "1";
+          msg.textContent = currentLang === "en" ? "Thank you! We will contact you shortly." : "Teşekkürler! En kısa sürede sizi arayacağız.";
+          msg.classList.remove("hidden");
+          setTimeout(function () { msg.classList.add("hidden"); }, 5000);
+        }, 800);
+      });
+    }
+
+    // Newsletter form handler
+    var nlForm = document.getElementById("newsletter-form");
+    if (nlForm) {
+      nlForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!nlForm.checkValidity()) { nlForm.reportValidity(); return; }
+        var msg = document.getElementById("newsletter-success");
+        nlForm.reset();
+        msg.textContent = currentLang === "en" ? "Subscribed successfully!" : "Başarıyla abone oldunuz!";
+        msg.classList.remove("hidden");
+        setTimeout(function () { msg.classList.add("hidden"); }, 5000);
+      });
+    }
+  });
 })();
