@@ -5,14 +5,10 @@
   if (!container || !canvas) return;
   var ctx = canvas.getContext("2d");
 
-  // Determine canvas size from container's actual aspect ratio
-  var rect = container.getBoundingClientRect();
-  var ratio = rect.width / rect.height; // e.g. ~5.6 for 1400x250
-  // Use a virtual height of 1000, width scales proportionally
-  var CH = 1000;
-  var CW = Math.round(CH * ratio);
-  canvas.width = CW;
-  canvas.height = CH;
+  // Square canvas for correct physics — CSS crops to show only the bottom
+  var SZ = 1000;
+  canvas.width = SZ;
+  canvas.height = SZ;
 
   // Verlet engine
   var points = [], pointCount = 0;
@@ -36,14 +32,12 @@
     this.strength = 1; this.visibility = vis || "visible";
     this.id = spanCount++;
   }
-  function Skin(pts, color) {
-    this.points = pts; this.color = color; this.id = skinCount++;
-  }
+  function Skin(pts, color) { this.points = pts; this.color = color; this.id = skinCount++; }
 
-  function xvp(p) { return p * CW / 100; }
-  function yvp(p) { return p * CH / 100; }
-  function pxv(v) { return v * 100 / CW; }
-  function pyv(v) { return v * 100 / CH; }
+  function xvp(p) { return p * SZ / 100; }
+  function yvp(p) { return p * SZ / 100; }
+  function pxv(v) { return v * 100 / SZ; }
+  function pyv(v) { return v * 100 / SZ; }
   function getPt(id) { for (var i = 0; i < points.length; i++) if (points[i].id === id) return points[i]; }
   function dist(a, b) { var dx = b.cx - a.cx, dy = b.cy - a.cy; return Math.sqrt(dx * dx + dy * dy); }
   function midp(s) { return { x: (s.p1.cx + s.p2.cx) / 2, y: (s.p1.cy + s.p2.cy) / 2 }; }
@@ -59,7 +53,7 @@
       var p = points[i];
       if (!p.fixed) {
         var xv = (p.cx - p.px) * friction, yv = (p.cy - p.py) * friction;
-        if (p.py >= CH - 1) xv *= skidLoss;
+        if (p.py >= SZ - 1) xv *= skidLoss;
         p.px = p.cx; p.py = p.cy;
         p.cx += xv; p.cy += yv; p.cy += gravity * p.mass;
         if (worldTime % rib(100, 200) === 0) p.cx += rfb(-breeze, breeze);
@@ -70,9 +64,9 @@
     for (var i = 0; i < points.length; i++) {
       var p = points[i];
       if (p.materiality === "material") {
-        if (p.cx > CW) { p.cx = CW; p.px = p.cx + (p.cx - p.px) * bounceLoss; }
+        if (p.cx > SZ) { p.cx = SZ; p.px = p.cx + (p.cx - p.px) * bounceLoss; }
         if (p.cx < 0) { p.cx = 0; p.px = p.cx + (p.cx - p.px) * bounceLoss; }
-        if (p.cy > CH) { p.cy = CH; p.py = p.cy + (p.cy - p.py) * bounceLoss; }
+        if (p.cy > SZ) { p.cy = SZ; p.py = p.cy + (p.cy - p.py) * bounceLoss; }
         if (p.cy < 0) { p.cy = 0; p.py = p.cy + (p.cy - p.py) * bounceLoss; }
       }
     }
@@ -96,7 +90,6 @@
     for (var j = 0; j < req; j++) { updateSpans(j); applyConstraints(); }
   }
 
-  // Plant system
   var plants = [], plantCount = 0;
   var sunRays = [], sunRayCount = 0;
   var phr = 2, geer = 0.5, leer = 0.03;
@@ -118,7 +111,6 @@
     this.spB = addSp(this.ptB1.id, this.ptB2.id);
     createSegment(this, null, this.ptB1, this.ptB2);
   }
-
   function Segment(plant, parent, bp1, bp2) {
     this.plantId = plant.id; this.id = plant.segmentCount;
     this.childSegment = null; this.hasChildSegment = false;
@@ -142,14 +134,12 @@
     this.skins = [];
     this.skins.push(addSk([this.ptE1.id, this.ptE2.id, bp2.id, bp1.id], "#2d5a27"));
   }
-
-  function createPlant() { plantCount++; plants.push(new Plant(rib(5, 95))); }
+  function createPlant() { plantCount++; plants.push(new Plant(rib(10, 90))); }
   function createSegment(pl, par, b1, b2) {
     pl.segmentCount++; pl.segments.unshift(new Segment(pl, par, b1, b2));
     if (par) { par.childSegment = pl.segments[pl.segments.length - 1]; par.hasChildSegment = true; }
   }
-  function createSunRays() { for (var i = 0; i < 101; i++) { sunRays.push({ id: i, x: xvp(i), intensity: 1, leafContacts: [] }); } }
-
+  function createSunRays() { for (var i = 0; i < 101; i++) sunRays.push({ id: i, x: xvp(i), intensity: 1, leafContacts: [] }); }
   function markRayLeafIntersections() {
     for (var i = 0; i < plants.length; i++) {
       for (var j = 0; j < plants[i].segments.length; j++) {
@@ -176,7 +166,6 @@
       sr.leafContacts = []; sr.intensity = 1;
     }
   }
-
   function growPlants() {
     for (var i = 0; i < plants.length; i++) {
       var pl = plants[i];
@@ -184,11 +173,8 @@
       if (pl.energy > 0) {
         for (var j = 0; j < pl.segments.length; j++) {
           var sg = pl.segments[j];
-          if (sg.spF.l < pl.maxSegmentWidth && pl.segments.length < pl.maxTotalSegments) {
-            lengthen(pl, sg); pl.energy -= sg.spCd.l * geer;
-          }
-          if (sg.spF.l > pl.maxSegmentWidth * 0.333 && !sg.hasChildSegment && pl.segmentCount < pl.maxTotalSegments)
-            createSegment(pl, sg, sg.ptE1, sg.ptE2);
+          if (sg.spF.l < pl.maxSegmentWidth && pl.segments.length < pl.maxTotalSegments) { lengthen(pl, sg); pl.energy -= sg.spCd.l * geer; }
+          if (sg.spF.l > pl.maxSegmentWidth * 0.333 && !sg.hasChildSegment && pl.segmentCount < pl.maxTotalSegments) createSegment(pl, sg, sg.ptE1, sg.ptE2);
           if (!sg.hasLeaves) genLeaves(pl, sg);
           else if (pl.segments.length < pl.maxTotalSegments) { growLeaves(pl, sg); pl.energy -= (sg.spLf1.l + sg.spLf2.l) * geer; }
         }
@@ -196,7 +182,6 @@
       pl.energy -= pl.segmentCount * leer;
     }
   }
-
   function lengthen(pl, sg) {
     if (sg.isBaseSegment) {
       sg.ptB1.cx -= pl.outwardGrowthRate / 2; sg.ptB2.cx += pl.outwardGrowthRate / 2;
@@ -207,20 +192,16 @@
       sg.spCuP.l = sg.spCdP.l * sg.forwardGrowthRateVariation;
       sg.spCd.l = dist(sg.ptE1, sg.ptB2); sg.spCu.l = dist(sg.ptB1, sg.ptE2);
     }
-    sg.spF.l += pl.outwardGrowthRate;
-    sg.spL.l = dist(sg.ptB1, sg.ptE1); sg.spR.l = dist(sg.ptB2, sg.ptE2);
+    sg.spF.l += pl.outwardGrowthRate; sg.spL.l = dist(sg.ptB1, sg.ptE1); sg.spR.l = dist(sg.ptB2, sg.ptE2);
   }
-
   function genLeaves(pl, sg) {
     if ((sg.id >= pl.firstLeafSegment && sg.id % pl.leafFrequency === 0 && sg.spF.l > pl.maxSegmentWidth * 0.1) || sg.id === pl.maxTotalSegments - 1) {
       var fm = midp(sg.spF);
       sg.ptLf1 = addPt(pxv(fm.x), pyv(fm.y - 1)); sg.ptLf2 = addPt(pxv(fm.x), pyv(fm.y - 1));
       sg.spLf1 = addSp(sg.ptB1.id, sg.ptLf1.id); sg.spLf2 = addSp(sg.ptB2.id, sg.ptLf2.id);
-      sg.leafTipsTetherSpan = addSp(sg.ptLf1.id, sg.ptLf2.id);
-      sg.hasLeaves = true;
+      sg.leafTipsTetherSpan = addSp(sg.ptLf1.id, sg.ptLf2.id); sg.hasLeaves = true;
     }
   }
-
   function addLeafScaffolding(pl, sg) {
     removeSpan(sg.leafTipsTetherSpan.id);
     sg.ptLf1.cx -= gravity * 100; sg.ptLf2.cx += gravity * 100;
@@ -233,17 +214,12 @@
     sg.ptLf2ScA = addPt(pxv(x), pyv(y), "immaterial"); sg.ptLf2ScA.mass = 0;
     x = (sg.ptLf2.cx + sg.ptLf2ScA.cx) / 2; y = (sg.ptLf2.cy + sg.ptLf2ScA.cy) / 2;
     sg.ptLf2ScB = addPt(pxv(x), pyv(y), "immaterial"); sg.ptLf2ScB.mass = 0;
-    sg.spLf1ScA = addSp(sg.ptE1.id, sg.ptLf1ScA.id, "hidden");
-    sg.spLf1ScB = addSp(sg.ptB1.id, sg.ptLf1ScA.id, "hidden");
-    sg.spLf1ScC = addSp(sg.ptLf1ScA.id, sg.ptLf1ScB.id, "hidden");
-    sg.spLf1ScD = addSp(sg.ptLf1ScB.id, sg.ptLf1.id, "hidden");
-    sg.spLf2ScA = addSp(sg.ptE2.id, sg.ptLf2ScA.id, "hidden");
-    sg.spLf2ScB = addSp(sg.ptB2.id, sg.ptLf2ScA.id, "hidden");
-    sg.spLf2ScC = addSp(sg.ptLf2ScA.id, sg.ptLf2ScB.id, "hidden");
-    sg.spLf2ScD = addSp(sg.ptLf2ScB.id, sg.ptLf2.id, "hidden");
+    sg.spLf1ScA = addSp(sg.ptE1.id, sg.ptLf1ScA.id, "hidden"); sg.spLf1ScB = addSp(sg.ptB1.id, sg.ptLf1ScA.id, "hidden");
+    sg.spLf1ScC = addSp(sg.ptLf1ScA.id, sg.ptLf1ScB.id, "hidden"); sg.spLf1ScD = addSp(sg.ptLf1ScB.id, sg.ptLf1.id, "hidden");
+    sg.spLf2ScA = addSp(sg.ptE2.id, sg.ptLf2ScA.id, "hidden"); sg.spLf2ScB = addSp(sg.ptB2.id, sg.ptLf2ScA.id, "hidden");
+    sg.spLf2ScC = addSp(sg.ptLf2ScA.id, sg.ptLf2ScB.id, "hidden"); sg.spLf2ScD = addSp(sg.ptLf2ScB.id, sg.ptLf2.id, "hidden");
     sg.hasLeafScaffolding = true;
   }
-
   function growLeaves(pl, sg) {
     if (sg.spLf1.l < pl.maxLeaflength) {
       sg.spLf1.l = sg.spLf2.l += pl.leafGrowthRate;
@@ -256,7 +232,6 @@
       }
     }
   }
-
   function renderLeaf(ls) {
     var p1x = ls.p1.cx, p1y = ls.p1.cy, p2x = ls.p2.cx, p2y = ls.p2.cy;
     var mx = (p1x + p2x) / 2, my = (p1y + p2y) / 2, ah = 0.35;
@@ -268,7 +243,6 @@
     ctx.beginPath(); ctx.moveTo(p1x, p1y); ctx.quadraticCurveTo(cx1, cy1, p2x, p2y); ctx.stroke(); ctx.fill();
     ctx.beginPath(); ctx.lineWidth = 1; ctx.strokeStyle = "#3a8a2e"; ctx.moveTo(p1x, p1y); ctx.lineTo(p2x, p2y); ctx.stroke();
   }
-
   function renderPlants() {
     for (var i = 0; i < plants.length; i++) {
       for (var j = 0; j < plants[i].segments.length; j++) {
@@ -281,8 +255,7 @@
           ctx.lineTo(sk.points[0].cx, sk.points[0].cy); ctx.stroke(); ctx.fill();
           ctx.beginPath(); ctx.lineWidth = 1; ctx.strokeStyle = "#0f1f0a";
           ctx.moveTo(sk.points[3].cx, sk.points[3].cy); ctx.lineTo(sk.points[0].cx, sk.points[0].cy);
-          ctx.moveTo(sk.points[2].cx, sk.points[2].cy); ctx.lineTo(sk.points[1].cx, sk.points[1].cy);
-          ctx.stroke();
+          ctx.moveTo(sk.points[2].cx, sk.points[2].cy); ctx.lineTo(sk.points[1].cx, sk.points[1].cy); ctx.stroke();
           if (!sg.hasChildSegment) { ctx.beginPath(); ctx.moveTo(sk.points[3].cx, sk.points[3].cy); ctx.lineTo(sk.points[2].cx, sk.points[2].cy); ctx.stroke(); }
         }
         if (sg.hasLeaves) { renderLeaf(sg.spLf1); renderLeaf(sg.spLf2); }
@@ -290,22 +263,16 @@
     }
   }
 
-  // Create more plants to fill the wide canvas
-  var numPlants = Math.round(20 * ratio);
-  for (var i = 0; i < numPlants; i++) createPlant();
+  for (var i = 0; i < 25; i++) createPlant();
   createSunRays();
 
   function display() {
-    updatePoints();
-    refinePositions();
-    ctx.clearRect(0, 0, CW, CH);
-    growPlants();
-    renderPlants();
-    markRayLeafIntersections();
-    photosynthesize();
+    updatePoints(); refinePositions();
+    ctx.clearRect(0, 0, SZ, SZ);
+    growPlants(); renderPlants();
+    markRayLeafIntersections(); photosynthesize();
     worldTime++;
     requestAnimationFrame(display);
   }
-
   display();
 })();
