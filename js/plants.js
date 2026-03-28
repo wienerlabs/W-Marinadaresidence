@@ -99,11 +99,11 @@
     this.xLocation = xLoc; this.energy = 5000; this.isAlive = true;
     this.forwardGrowthRate = gravity * rfb(35, 50);
     this.outwardGrowthRate = this.forwardGrowthRate * rfb(0.18, 0.22);
-    this.maxSegmentWidth = rfb(11, 13);
-    this.maxTotalSegments = rib(6, 12);
+    this.maxSegmentWidth = rfb(6, 8);
+    this.maxTotalSegments = rib(4, 8);
     this.firstLeafSegment = rib(2, 4);
     this.leafFrequency = rib(2, 3);
-    this.maxLeaflength = this.maxSegmentWidth * rfb(3, 5);
+    this.maxLeaflength = this.maxSegmentWidth * rfb(2, 3.5);
     this.leafGrowthRate = this.forwardGrowthRate * rfb(1.4, 1.6);
     this.ptB1 = addPt(this.xLocation - 0.1, 100);
     this.ptB2 = addPt(this.xLocation + 0.1, 100);
@@ -276,9 +276,9 @@
     createSunRays();
   }
 
-  var LOOP_MAX_FRAMES = 1800; // force restart after ~30 sec regardless
-  var HOLD_FRAMES = 240;      // hold mature ~4 sec
-  var FADE_FRAMES = 60;       // fade out ~1 sec
+  var LOOP_MAX_FRAMES = 900;  // force restart after ~15 sec
+  var HOLD_FRAMES = 60;       // hold mature ~1 sec
+  var FADE_FRAMES = 40;       // fade out ~0.7 sec
   var loopPhase = "growing";  // "growing" | "holding" | "fading"
   var phaseCounter = 0;
   var fadeAlpha = 1;
