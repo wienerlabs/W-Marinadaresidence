@@ -244,6 +244,11 @@
         </div>
     </section>
 
+    <!-- Plant Growth Divider -->
+    <div id="plant-divider" class="relative w-full h-[250px] bg-white overflow-hidden" style="margin-top:-1px;">
+      <canvas id="plant-canvas" width="2000" height="800" class="absolute bottom-0 left-0 w-full h-full"></canvas>
+    </div>
+
     <!-- İç Mekan Galerisi Section -->
     <section id="galeri" class="py-32 bg-stone-100">
         <div class="max-w-[1600px] mx-auto px-6">
@@ -538,6 +543,7 @@
     <script>if(localStorage.getItem('cookies_accepted')==='1'){document.getElementById('cookie-banner').style.display='none';}</script>
 
     <script src="js/i18n.js"></script>
+    <script src="js/plants.js" defer></script>
     <script src="js/waves.js" defer></script>
     <script src="js/main.js" defer></script>
 </body>
