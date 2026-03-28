@@ -67,6 +67,18 @@ const translations = {
     "suites.marina.title": "Marina Yaşamı",
     "suites.marina.desc": "Mega yat marina ile bütünleşik yaşam",
 
+    // Concierge
+    "concierge.label": "Concierge",
+    "concierge.h2.line1": "HER ŞEY",
+    "concierge.h2.line2": "RAHATINIZ İÇİN.",
+    "concierge.desc": "Sizi otel konforunda hissettirecek concierge hizmetleri ile rahatlık Marinada Residence'da.",
+    "concierge.cta": "Detaylı Bilgi",
+    "concierge.s1": "Housekeeping",
+    "concierge.s2": "Dry Cleaning",
+    "concierge.s3": "Room Service",
+    "concierge.s4": "Havalimanı Transfer",
+    "concierge.s5": "Deniz Taksi",
+
     // Gallery
     "gallery.label": "İç Mekan",
     "gallery.title": "Yaşam Alanlarından Kareler",
@@ -186,6 +198,18 @@ const translations = {
     "suites.social.desc": "Fitness, indoor pool, sauna & lounge",
     "suites.marina.title": "Marina Living",
     "suites.marina.desc": "Integrated living with mega yacht marina",
+
+    // Concierge
+    "concierge.label": "Concierge",
+    "concierge.h2.line1": "EVERYTHING",
+    "concierge.h2.line2": "FOR YOUR COMFORT.",
+    "concierge.desc": "Hotel-level concierge services that make you feel at home in Marinada Residence.",
+    "concierge.cta": "Learn More",
+    "concierge.s1": "Housekeeping",
+    "concierge.s2": "Dry Cleaning",
+    "concierge.s3": "Room Service",
+    "concierge.s4": "Airport Transfer",
+    "concierge.s5": "Sea Taxi",
 
     // Gallery
     "gallery.label": "Interiors",
