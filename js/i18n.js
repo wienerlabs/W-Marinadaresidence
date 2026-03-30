@@ -12,9 +12,9 @@ const translations = {
     "hero.card.title": "17 Katlı Özgün Tasarım",
 
     // Hero - main
-    "hero.h1.line1": "DENİZE",
+    "hero.h1.line1": "Denize",
     "hero.h1.line2": "açılan",
-    "hero.h1.line3": "HAYAT.",
+    "hero.h1.line3": "Hayat.",
     "hero.desc": "Marinada Residence, Ataköy Marina'nın yanı başında, 10.500 m² üzerine kurulu 17 katlı özgün mimarisiyle deniz ile şehri buluşturan lüks bir yaşam projesidir.",
     "hero.btn.explore": "Projeyi Keşfet",
     "hero.btn.contact": "İletişim",
@@ -38,8 +38,8 @@ const translations = {
     "loc.r10": "Kadıköy", "loc.r10t": "20 dk",
 
     // About
-    "about.h2.line1": "DENİZ İLE İÇ İÇE.",
-    "about.h2.line2": "MODERN YAŞAM.",
+    "about.h2.line1": "Deniz ile İç İçe.",
+    "about.h2.line2": "Modern Yaşam.",
     "about.smart.title": "Akıllı Evler",
     "about.smart.desc": "Konfor ve güvenliğin bir arada sunulduğu, otomasyon sistemli modern yaşam alanları. Kesintisiz deniz manzarası sunan geniş pencereler ve balkonlarla donatılmış daireler.",
     "about.concierge.title": "Concierge Hizmetleri",
@@ -66,8 +66,8 @@ const translations = {
 
     // Concierge
     "concierge.label": "Concierge",
-    "concierge.h2.line1": "HER ŞEY",
-    "concierge.h2.line2": "RAHATINIZ İÇİN.",
+    "concierge.h2.line1": "Her Şey",
+    "concierge.h2.line2": "Rahatlığınız İçin.",
     "concierge.desc": "Sizi otel konforunda hissettirecek concierge hizmetleri ile rahatlık Marinada Residence'da.",
     "concierge.cta": "Detaylı Bilgi",
     "concierge.s1": "Housekeeping",
@@ -141,9 +141,9 @@ const translations = {
     "hero.card.title": "17-Story Unique Design",
 
     // Hero - main
-    "hero.h1.line1": "LIFE",
+    "hero.h1.line1": "Life",
     "hero.h1.line2": "by the",
-    "hero.h1.line3": "SEA.",
+    "hero.h1.line3": "Sea.",
     "hero.desc": "Marinada Residence is a luxury living project built on 10,500 m² next to Ataköy Marina, uniting the sea and the city with its 17-story distinctive architecture.",
     "hero.btn.explore": "Explore Project",
     "hero.btn.contact": "Contact",
@@ -167,8 +167,8 @@ const translations = {
     "loc.r10": "Kadıköy", "loc.r10t": "20 min",
 
     // About
-    "about.h2.line1": "EMBRACED BY THE SEA.",
-    "about.h2.line2": "MODERN LIVING.",
+    "about.h2.line1": "Embraced by the Sea.",
+    "about.h2.line2": "Modern Living.",
     "about.smart.title": "Smart Homes",
     "about.smart.desc": "Modern living spaces with automation systems offering comfort and security together. Residences equipped with panoramic windows and balconies providing uninterrupted sea views.",
     "about.concierge.title": "Concierge Services",
@@ -195,8 +195,8 @@ const translations = {
 
     // Concierge
     "concierge.label": "Concierge",
-    "concierge.h2.line1": "EVERYTHING",
-    "concierge.h2.line2": "FOR YOUR COMFORT.",
+    "concierge.h2.line1": "Everything",
+    "concierge.h2.line2": "For Your Comfort.",
     "concierge.desc": "Hotel-level concierge services that make you feel at home in Marinada Residence.",
     "concierge.cta": "Learn More",
     "concierge.s1": "Housekeeping",
