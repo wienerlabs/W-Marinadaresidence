@@ -12,17 +12,17 @@ const translations = {
     "hero.card.title": "17 Katlı Özgün Tasarım",
 
     // Hero - main
-    "hero.h1.line1": "Denize",
-    "hero.h1.line2": "açılan",
-    "hero.h1.line3": "Hayat.",
-    "hero.desc": "Marinada Residence, Ataköy Marina'nın yanı başında, 10.500 m² üzerine kurulu 17 katlı özgün mimarisiyle deniz ile şehri buluşturan lüks bir yaşam projesidir.",
+    "hero.h1.line1": "Hayat",
+    "hero.h1.line2": "Marinada",
+    "hero.h1.line3": "Başlar.",
+    "hero.desc": "Denizle kurduğunuz bağ artık yalnızca bir manzara değil, hayatınızın kendisi. Modern mimari, geniş açık alanlar ve marina ile bütünleşen bir yaşam.",
     "hero.btn.explore": "Projeyi Keşfet",
     "hero.btn.contact": "İletişim",
 
     // Location
     "loc.label": "Ulaşım Ağı",
-    "loc.title": "Stratejik Konumun Avantajı",
-    "loc.subtitle": "İstanbul'un kalbinde, tüm ulaşım noktalarına dakikalar mesafede.",
+    "loc.title": "Şehir Burada Kontrol Altında",
+    "loc.subtitle": "Şehir artık uzaklaşmak istediğiniz bir yer değil. Kontrol edebildiğiniz bir yaşam biçimi.",
     "loc.cat1": "Havalimanları",
     "loc.cat2": "Ulaşım Bağlantıları",
     "loc.cat3": "Şehir Merkezleri",
@@ -38,8 +38,8 @@ const translations = {
     "loc.r10": "Kadıköy", "loc.r10t": "20 dk",
 
     // About
-    "about.h2.line1": "Deniz ile İç İçe.",
-    "about.h2.line2": "Modern Yaşam.",
+    "about.h2.line1": "Şehir Ardınızda.",
+    "about.h2.line2": "Deniz Önünüzde.",
     "about.smart.title": "Akıllı Evler",
     "about.smart.desc": "Konfor ve güvenliğin bir arada sunulduğu, otomasyon sistemli modern yaşam alanları. Kesintisiz deniz manzarası sunan geniş pencereler ve balkonlarla donatılmış daireler.",
     "about.concierge.title": "Concierge Hizmetleri",
@@ -66,9 +66,9 @@ const translations = {
 
     // Concierge
     "concierge.label": "Concierge",
-    "concierge.h2.line1": "Her Şey",
-    "concierge.h2.line2": "Rahatlığınız İçin.",
-    "concierge.desc": "Sizi otel konforunda hissettirecek concierge hizmetleri ile rahatlık Marinada Residence'da.",
+    "concierge.h2.line1": "Konfor, En İnce",
+    "concierge.h2.line2": "Ayrıntısına Kadar Düşünüldü.",
+    "concierge.desc": "Sizi otel konforunda hissettiren concierge hizmetleriyle, yaşamın her anı daha akıcı ve ayrıcalıklı.",
     "concierge.cta": "Detaylı Bilgi",
     "concierge.s1": "Housekeeping",
     "concierge.s2": "Dry Cleaning",
@@ -78,20 +78,20 @@ const translations = {
 
     // Gallery
     "gallery.label": "İç Mekan",
-    "gallery.title": "Yaşam Alanlarından Kareler",
-    "gallery.desc": "Her detayın titizlikle tasarlandığı, deniz manzaralı modern iç mekanlar.",
+    "gallery.title": "Denizle Çerçevelenen Bir Yaşam",
+    "gallery.desc": "Işığı, manzarayı ve modern tasarımı kusursuz bir uyumla bir araya getiren seçkin yaşam alanları.",
 
     // CTA
     "cta.label": "Ataköy Marina",
-    "cta.title": "Hayalinizdeki Yaşam Sizi Bekliyor.",
-    "cta.desc": "Ataköy Marina'nın yanı başında, denize sıfır konumuyla eşsiz bir yaşam fırsatı.",
+    "cta.title": "Şehrin İçinde, Denizin Kıyısında Bir Yaşam.",
+    "cta.desc": "Ataköy Marina'nın yanı başında konumlanan Ataköy Marinada Residence, denize sıfır yaşam ayrıcalığını seçkin bir konfor anlayışıyla sunuyor.",
     "cta.btn.call": "Hemen Arayın",
     "cta.btn.visit": "Satış Ofisini Ziyaret Edin",
 
     // Contact
     "contact.label": "İletişim",
-    "contact.title": "Sizi Arayalım",
-    "contact.desc": "Proje hakkında detaylı bilgi almak için formu doldurun, sizi arayalım.",
+    "contact.title": "Sizin İçin Buradayız",
+    "contact.desc": "Ataköy Marinada Residence'a ilişkin tüm detayları öğrenmek için formu doldurun, size kısa süre içinde dönüş yapalım.",
     "contact.form.name": "Adınız Soyadınız",
     "contact.form.email": "E-posta Adresiniz",
     "contact.form.phone": "Telefon Numaranız",
