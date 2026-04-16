@@ -78,13 +78,13 @@
   if (!container) return;
 
   const layers = [
-    { fill: '#d6d3d1' },  // stone-300
-    { fill: '#a8a29e' },  // stone-400
-    { fill: '#78716c' },  // stone-500
-    { fill: '#57534e' },  // stone-600
-    { fill: '#44403c' },  // stone-700
-    { fill: '#292524' },  // stone-800
-    { fill: '#1c1917' },  // stone-900
+    { fill: '#A8BDCE' },  // #1E3F5A tint 1 (lightest)
+    { fill: '#89A3B8' },  // #1E3F5A tint 2
+    { fill: '#6A88A1' },  // #1E3F5A tint 3
+    { fill: '#4B6D8B' },  // #1E3F5A tint 4
+    { fill: '#385572' },  // #1E3F5A shade 1
+    { fill: '#284860' },  // #1E3F5A shade 2
+    { fill: '#1E3F5A' },  // base color
   ];
 
   const config = {
